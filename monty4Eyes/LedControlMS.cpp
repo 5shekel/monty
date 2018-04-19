@@ -219,7 +219,7 @@ int LedControl::getCharArrayPosition(char input){
      if (input==':') return 11;
      if (input=='-') return 12;
      if (input=='.') return 13;
-     if ((input =='(')) return  14;  //replace by 'ñ'   
+     if ((input =='(')) return  14;  //replace by 'ï¿½'   
      if ((input >='0')&&(input <='9')) return (input-'0');
      if ((input >='A')&&(input <='Z')) return (input-'A' + 15);
      if ((input >='a')&&(input <='z')) return (input-'a' + 15);     
