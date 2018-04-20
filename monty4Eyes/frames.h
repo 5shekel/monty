@@ -1,5 +1,3 @@
-#include "LedControlMS.h"
-
 
 /* here is the data for the characters */
 byte a1[8] = {
@@ -441,6 +439,7 @@ byte g4[8] = {
   B00111110,
   B00111100
 };
+
 byte h4[8] = {
   B00101111, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00001111
 };
