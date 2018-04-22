@@ -4,12 +4,10 @@
 
 LedControl lc = LedControl(11, 13, 10, 4);
 
-//Yair's delay:
-unsigned long delaytime = 250;
-
 //Tommy's delay:
-//int delaytime = 250;
-//unsigned long currenttime = 0;
+int delaytime = 250;
+unsigned long currenttime = 0;
+int frameTotal; //temp value for number of frames in a MMA (multi multi array)
 
 //keypad definitions
 /*
@@ -27,20 +25,31 @@ unsigned long delaytime = 250;
 void setup() {
   for (int iii = 0; iii < 4; iii++) {
     lc.shutdown(iii, false);
-    lc.setIntensity(iii, 15);
     lc.clearDisplay(iii);
     lc.setIntensity(iii, 8);
   }
+
+  //to get the number of frames in the multi multi dimensional array (a.k.a animation)
+  //we ask for the total array size and divide it by the number of bits in a single frame (32)
+  /*
+    int frames  = (sizeof(a) / 32);
+    Serial.begin(115200);
+    Serial.println(sizeof(a));
+    Serial.println(sizeof(a[0][0][0]));
+    Serial.println(numberOfElements);
+  */
 }
 
 void loop() {
   //  if(millis() > currenttime + delaytime){
   //        currenttime = millis();
 
-  //here we update the entire a1-a4 frame in one multi
-  // dimension array over the 4 display segments
-  for (int seg = 0 ; seg < 4; seg++) {
-    for (int row = 0; row < 8; row++ )
-      lc.setRow(seg, row, a0[seg][row]);
+  frameTotal = (sizeof(c) / 32);
+  for (int frame = 0; frame < frameTotal; frame++) {
+    for (int seg = 0 ; seg < 4; seg++) {
+      for (int row = 0; row < 8; row++ )
+        lc.setRow(seg, row, c[frame][seg][row]);
+    }
+    delay(delaytime);
   }
 }
