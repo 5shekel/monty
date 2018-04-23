@@ -1,18 +1,5 @@
-//example of 3D array
-// animation[frameNun][row][col]
-
-int array_3D[2][2][3] {
-  {
-    {9, 2, 3},
-    {4, 5, 6}
-  },
-  {
-    {1, 2, 3},
-    {4, 5, 6}
-  }
-};
-
 /* here is the data for the characters */
+
 
 #include "data/animation_A.h"
 #include "data/animation_C.h"
