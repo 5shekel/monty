@@ -13,6 +13,8 @@
  Written by Mark Ruys, 2013.
  BSD license, check license.txt for more information.
  All text above must be included in any redistribution.
+ 
+// https://github.com/markruys/arduino-Max72xxPanel
 
  Datasheet: http://datasheets.maximintegrated.com/en/ds/MAX7219-MAX7221.pdf
 
