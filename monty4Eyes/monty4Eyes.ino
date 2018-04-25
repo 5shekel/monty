@@ -1,6 +1,6 @@
 
 
-// monty eye test 
+// monty eye test
 
 #include <Adafruit_GFX.h> // uses the adafruit GFX lib
 #include "Max72xxPanel.h" // https://github.com/markruys/arduino-Max72xxPanel
@@ -27,21 +27,22 @@ void setup() {
   matrix.setRotation(3, 3);
 
   matrix.fillScreen(LOW);
-  
+
   matrix.drawBitmap(0, 0, nums[0], 16, 16, 255);
   matrix.write();
   delay(2000);
-  
-  for (int step = 0; step < k_size; step++) {
-    matrix.fillScreen(LOW);
-    matrix.drawBitmap(0, 0, snail[step], 16, 16, 255);
-    matrix.write(); // Send bitmap to display
-    delay(40);
-  }
+
 
 }
 
 void loop() {
 
+
+  for (int step = 0; step < dance_size; step++) {
+    matrix.fillScreen(LOW);
+    matrix.drawBitmap(0, 0, dance[step], 16, 16, 255);
+    matrix.write(); // Send bitmap to display
+    delay(80);
+  }
 
 }

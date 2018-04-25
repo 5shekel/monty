@@ -3,3 +3,4 @@
 
 #include "data/animation_nums.h"
 #include "data/animation_snail.h"
+#include "data/animation_dance.h"
