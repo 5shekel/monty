@@ -1,65 +1,69 @@
-#include "LedControlMS.h"
+#include <SPI.h>
+#include <Adafruit_GFX.h>
+#include "Max72xxPanel.h"
+
+int pinCS = 10; // Attach CS to this pin, DIN to MOSI and CLK to SCK (cf http://arduino.cc/en/Reference/SPI )
+int numberOfHorizontalDisplays = 2;
+int numberOfVerticalDisplays = 2;
+
+Max72xxPanel matrix = Max72xxPanel(pinCS, numberOfHorizontalDisplays, numberOfVerticalDisplays);
+
 #include "frame.h"
 
-LedControl lc = LedControl(11, 13, 10, 4);
+const uint8_t myBitmapBitmap [] PROGMEM = {
+  0x00, 0x00, 0x08, 0x18, 0x18, 0x24, 0x08, 0x08, 0x08, 0x10, 0x08, 0x20, 0x08, 0x3c, 0x00, 0x00,
+  0x00, 0x00, 0x3c, 0x24, 0x04, 0x24, 0x3c, 0x3c, 0x04, 0x04, 0x04, 0x04, 0x3c, 0x04, 0x00, 0x00,
+};
 
-//Tommy's delay:
-int delaytime = 50;
-unsigned long currenttime = 0;
 
-//keypad definitions
-/*
-  #include <Keypad.h>
 
-  const byte ROWS = 4; //four rows
-  const byte COLS = 3; //three columns
-  char keys[ROWS][COLS] = {
-  {'1','2','3'},
-  {'4','5','6'},
-  {'7','8','9'},
-  {'*','0','#'}
-  };
-  byte rowPins[ROWS] = {8, 7, 6, 5};
-  byte colPins[COLS] = {4, 3, 2};
-*/
-
-void animation(byte *arr, int total_frames) {
-  for (int n_frame = 0; n_frame < total_frames; n_frame++) {
-    for (int seg = 0 ; seg < 4; seg++) {
-      for (int row = 0; row < 8; row++) {
-        byte getRow = arr[calc_index(row, seg, n_frame)];
-        lc.setRow(seg, row, getRow);
-      }
-    }
-    delay(50);
-  }
-}
-
-size_t calc_index(int row, int seg, int frame) {
-  return row + (seg * 8) + (32 * frame);
-}
 
 void setup() {
-  Serial.begin(115200);
-  Serial.println("start..");
+  matrix.setIntensity(0);
 
-  for (int iii = 0; iii < 4; iii++) {
-    lc.shutdown(iii, false);
-    lc.clearDisplay(iii);
-    lc.setIntensity(iii, 6);
+  // Adjust to your own needs
+  matrix.setPosition(0, 0, 0); // The first display is at <0, 0>
+  matrix.setPosition(1, 1, 0); // The second display is at <1, 0>
+  matrix.setPosition(2, 3, 0); // The third display is at <2, 0>
+  matrix.setPosition(3, 2, 0); // And the last display is at <3, 0>
+
+  matrix.setRotation(0, 3);
+  matrix.setRotation(1, 1);
+  matrix.setRotation(2, 1);
+  matrix.setRotation(3, 3);
+
+  matrix.fillScreen(LOW);
+  
+  matrix.drawBitmap(0, 0, snail[0], 16, 16, 255);
+  matrix.write();
+  delay(2000);
+  
+  for (int step = 0; step < k_size; step++) {
+    matrix.fillScreen(LOW);
+    matrix.drawBitmap(0, 0, snail[step], 16, 16, 255);
+    matrix.write(); // Send bitmap to display
+    delay(40);
   }
+
 }
 
-
+int wait = 50;
+int inc = -2;
 
 void loop() {
+  /*
+    for ( int x = 0; x < matrix.width() - 1; x++ ) {
+      matrix.fillScreen(LOW);
+      matrix.drawLine(x, 0, matrix.width() - 1 - x, matrix.height() - 1, HIGH);
+      matrix.write(); // Send bitmap to display
+      delay(wait);
+    }
+      wait = wait + inc;
+    if ( wait == 0 ) inc = 2;
+    if ( wait == 50 ) inc = -2;
+  */
 
-  animation(c, 7);
-  delay(1000);
 
-  animation(d, d_size);
-  delay(1000);
 
-  animation(k, k_size);
-  delay(1000);
-  }
+
+}
