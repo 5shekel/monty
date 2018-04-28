@@ -68,7 +68,7 @@ int getTouch() {
     // if it *was* touched and now *isnt*, alert!
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
       Serial.print(i); Serial.println(" released");
-      animState = i;
+      animState = animationState(i);
       step=0;
       maxstep= size_array[i];
     }
