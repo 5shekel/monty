@@ -1,7 +1,19 @@
 
 
 // monty eye test
-
+/*
+ * = wiring ARDUNIO=
+ * 
+ * MATRIX / SPI
+ * CLK = D13
+ * CS = D10
+ * DIN = D11
+ * 
+ * TOUCH / I2C
+ * SCL = A5
+ * SDA = A4 
+ *  
+*/
 #include <Adafruit_GFX.h> // uses the adafruit GFX lib
 #include "Max72xxPanel.h" // https://github.com/markruys/arduino-Max72xxPanel
 
@@ -65,12 +77,12 @@ int getTouch() {
   currtouched = cap.touched();
 
   for (uint8_t i = 0; i < 12; i++) {
-    // if it *was* touched and now *isnt*, alert!
-    if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" released");
+    // it if *is* touched and *wasnt* touched before, alert!
+    if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
+      Serial.print(i); Serial.println(" touched");
       animState = animationState(i);
-      step=0;
-      maxstep= size_array[i];
+      step = 0;
+      maxstep = size_array[i];
     }
   }
   // reset our state
@@ -86,7 +98,7 @@ void loop() {
 
   if ( (currentMillis - prevMillis >= 80) && animState != def) {
     prevMillis = currentMillis;
-    
+
     matrix.fillScreen(LOW);
 
     if (animState == Snums) {
@@ -97,7 +109,7 @@ void loop() {
       matrix.drawBitmap(0, 0, snail[step], 16, 16, 255);
     }
 
-    if (step >= maxstep-1) {
+    if (step >= maxstep - 1) {
       animState = def;
       step = 0;
     }
