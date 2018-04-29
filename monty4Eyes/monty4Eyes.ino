@@ -2,17 +2,17 @@
 
 // monty eye test
 /*
- * = wiring ARDUNIO=
- * 
- * MATRIX / SPI
- * CLK = D13
- * CS = D10
- * DIN = D11
- * 
- * TOUCH / I2C
- * SCL = A5
- * SDA = A4 
- *  
+   = wiring ARDUNIO=
+
+   MATRIX / SPI
+   CLK = D13
+   CS = D10
+   DIN = D11
+
+   TOUCH / I2C
+   SCL = A5
+   SDA = A4
+
 */
 #include <Adafruit_GFX.h> // uses the adafruit GFX lib
 #include "Max72xxPanel.h" // https://github.com/markruys/arduino-Max72xxPanel
@@ -38,8 +38,8 @@ uint16_t currtouched = 0;
 
 
 unsigned long prevMillis = 0;
-int step = 0;
-int maxstep = 8;
+int step, maxstep;
+int loops, loopCount;
 
 void setup() {
   Serial.begin(115200);
@@ -79,10 +79,12 @@ int getTouch() {
   for (uint8_t i = 0; i < 12; i++) {
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" touched");
       animState = animationState(i);
       step = 0;
       maxstep = size_array[i];
+      loops = loop_array[i]; //how many loops to run the animation
+      Serial.print(loops); Serial.println(" :loops");
+      Serial.print(i); Serial.println(" touched");
     }
   }
   // reset our state
@@ -110,10 +112,16 @@ void loop() {
     }
 
     if (step >= maxstep - 1) {
-      animState = def;
       step = 0;
+      loopCount++;
+    }
+    if (loopCount >= loops) {
+      Serial.println("def");
+      loopCount=0;
+      animState = def;
     }
     step++;
+    
     matrix.write();
   }
 }
