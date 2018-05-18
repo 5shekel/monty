@@ -48,37 +48,36 @@ void setup() {
 
   matrix.setIntensity(0);
 
-  // Adjust to your own needs
-  matrix.setPosition(0, 0, 0); // The first display is at <0, 0>
-  matrix.setPosition(1, 1, 0); // The second display is at <1, 0>
-  matrix.setPosition(2, 3, 0); // The third display is at <2, 0>
-  matrix.setPosition(3, 2, 0); // And the last display is at <3, 0>
-
-  matrix.setPosition(4, 0, 0); // The first display is at <0, 0>
-  matrix.setPosition(5, 0, 0); // The second display is at <1, 0>
-  matrix.setPosition(6, 0, 0); // The third display is at <2, 0>
-  matrix.setPosition(7, 0, 0);
 
 
-  matrix.setRotation(0, 3);
-  matrix.setRotation(1, 1);
-  matrix.setRotation(2, 1);
-  matrix.setRotation(3, 3);
-  matrix.setRotation(4, 2);
-  matrix.setRotation(5, 2);
-  matrix.setRotation(6, 2);
-  matrix.setRotation(7, 2);
 
-  matrix.fillScreen(LOW);
-///  matrix.drawBitmap(0, 0, nums[0], 32, 16, 255);
-  matrix.write();
+  matrix.setPosition(0, 0, 0);
+  matrix.setPosition(1, 1, 0);
+  matrix.setPosition(5, 2, 0); //3
+  matrix.setPosition(2, 1, 1); //5
+  
+  matrix.setPosition(3, 0, 1); //4
+  matrix.setPosition(4, 3, 0); //6
+
+  matrix.setPosition(6, 2, 1); //7
+  matrix.setPosition(7, 3, 1); //8
+
+  matrix.setRotation(0, 1); //1
+  matrix.setRotation(1, 1); //2
+  matrix.setRotation(2, 1); //5
+  matrix.setRotation(3, 1); //4
+  matrix.setRotation(4, 3); //5
+  matrix.setRotation(5, 3); //3
+  matrix.setRotation(6, 1); //7
+  matrix.setRotation(7, 1); //8
+
 
   delay(500);
   matrix.fillScreen(LOW);
   matrix.write();
 
 }
-int getTouch() {
+void getTouch() {
   currtouched = cap.touched();
 
   for (uint8_t i = 0; i < 12; i++) {
